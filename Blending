@@ -1,0 +1,27 @@
+from PIL import Image
+
+import numpy as np
+
+src1 = np.array(Image.open('ggv.jpg'))
+
+src2 = np.array(Image.open('maingate.jpg').resize(src1.shape[1::-1], Image.BILINEAR))
+
+
+
+print(src1.dtype)
+
+
+
+
+
+dst = src1 * 0.5 + src2 * 0.5
+
+
+
+print(dst.dtype)
+
+# float64
+
+
+
+Image.fromarray(dst.astype(np.uint8)).save('image_alpha_blend.jpg')
