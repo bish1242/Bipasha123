@@ -1,0 +1,32 @@
+d = gray / 255.0
+    noise = gray_normalized + 0.2 * np.random.randn(*gray_normalized.shape)
+    noise = np.clip(noise, 0, 1)
+    denoised = ndimage.median_filter(noise, size=3)
+    noise_display = (noise * 255).astype(np.uint8)
+    denoised_display = (denoised * 255).astype(np.uint8)
+    cv2.imshow('Original Grayscale', gray)
+    cv2.imshow('Noisy Image', noise_display)
+    cv2.imshow('Median Filtered', denoised_display)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+cam.release()import cv2
+import numpy as np
+from scipy import ndimage
+
+
+cam = cv2.VideoCapture(0)
+
+if not cam.isOpened():
+    print("Cannot access the webcam")
+    exit()
+
+print("Press 'q' to quit.")
+
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        print("Failed to grab frame")
+        break
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray_normalize
+cv2.destroyAllWindows()
