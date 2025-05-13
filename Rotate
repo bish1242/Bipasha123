@@ -1,0 +1,52 @@
+import numpy as np
+from scipy import ndimage
+import matplotlib.pyplot as plt
+from skimage import io
+
+# Load the image
+face = io.imread ('ggv.jpg', as_gray=True)
+
+# Get the dimensions of the image
+lx, ly = face.shape
+# Crop the central region of the image
+crop_face = face[lx//6:-lx//6, ly//6:-ly//6]
+
+# Flip the image horizontally
+flip_lr_face = np.fliplr(face)
+
+# Rotate the image by 60 degrees with reshaping
+rotate_face = ndimage.rotate(face, 60)
+
+# Rotate the image by 60 degrees without reshaping
+rotate_face_noreshape = ndimage.rotate(face, 60, reshape=False)
+
+# Display the images
+plt.figure(figsize=(12.5, 2.5))
+
+plt.subplot(151)
+plt.imshow(crop_face, cmap=plt.cm.gray)
+plt.axis('off')
+plt.title('Cropped')
+
+plt.subplot(152)
+plt.imshow(face, cmap=plt.cm.gray)
+plt.axis('off')
+plt.title('Original')
+
+plt.subplot(153)
+plt.imshow(flip_lr_face, cmap=plt.cm.gray)
+plt.axis('off')
+plt.title('Flipped LR')
+
+plt.subplot(154)
+plt.imshow(rotate_face, cmap=plt.cm.gray)
+plt.axis('off')
+plt.title('Rotated (reshape=True)')
+
+plt.subplot(155)
+plt.imshow(rotate_face_noreshape, cmap=plt.cm.gray)
+plt.axis('off')
+plt.title('Rotated (reshape=False)')
+
+plt.subplots_adjust(wspace=0.02, hspace=0.3, top=1, bottom=0.1, left=0, right=1)
+plt.show()
